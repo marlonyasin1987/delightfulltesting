@@ -683,15 +683,16 @@ var arrayfield166543654= [
   
 ];
 
-
+var crabHit = [];
+var FgroundMapArray = [];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////									Array-Filler-Stuff																				//////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var FgroundMapArray = new Array(328);
-			for(i=0;i<328;i++){
-				FgroundMapArray[i]=new Array(328);
-			}
-		
+  for(let i=0;i<328;i++){
+    FgroundMapArray[i]=new Array(272);
+}
+
 var FgroundMapArrayFiller = function(){
 			for(i=0;i<arrayfield1.length;i++){
 				for(j=0;j<arrayfield1[i].length;j++){
@@ -712,3 +713,247 @@ var FgroundMapArrayFiller = function(){
 		}
 
 FgroundMapArrayFiller();
+console.log('FgroundMapArrayFiller()');
+console.log(FgroundMapArray.length);
+console.log(FgroundMapArray[0].length);
+
+function extractImageData(collisionimage) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = collisionimage.width;
+  canvas.height = collisionimage.height;
+  ctx.drawImage(collisionimage.baseTexture.resource.source, 0, 0);
+  return ctx.getImageData(0, 0, collisionimage.width, collisionimage.height);
+}
+
+function convertImageToArray(imageData) {
+  const width = imageData.width;
+  const height = imageData.height;
+  const data = imageData.data;
+  const array = [];
+
+  for (let y = 0; y < height; y++) {
+      const row = [];
+      for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const r = data[index];
+          const g = data[index + 1];
+          const b = data[index + 2];
+          const a = data[index + 3];
+
+          // Prüfen, ob der Pixel weiß ist (r=255, g=255, b=255) und vollständig deckend (a=255)
+          if (r === 255 && g === 255 && b === 255 && a === 255) {
+              row.push(0);
+          } else {
+              row.push(1);
+          }
+      }
+      array.push(row);
+  }
+
+  return array;
+}
+
+function getTransparent(x, y,image) {
+  // Erstellen eines temporären Canvas
+  const tempCanvas = document.createElement('canvas');
+  const tempContext = tempCanvas.getContext('2d');
+  tempCanvas.width = app.screen.width;
+  tempCanvas.height = app.screen.height;
+
+  // Zeichnen des TilingSprites auf das temporäre Canvas
+  tempContext.drawImage(app.renderer.extract.canvas(image), 0, 0);
+
+  // Abrufen der Bilddaten an den angegebenen Koordinaten
+  const imageData = tempContext.getImageData(x, y, 1, 1).data;
+  const isTransparent = imageData[3] === 0; // Überprüfen der Alpha-Komponente
+
+  return {
+      transparent: isTransparent
+  };
+}
+
+function setWeaponHitArray(width, height, sliceWidth, sliceHeight) {
+
+
+   // Create an Image object
+    const img = new Image();
+    let fullArray = [];
+    // Set up a callback for when the image is loaded
+    img.onload = function() {
+      // Create a canvas to draw the image onto
+      const canvas1 = document.createElement('canvas');
+      canvas1.width = img.width;
+      canvas1.height = img.height;
+      const ctx = canvas1.getContext('2d');
+
+      // Draw the image onto the canvas
+      ctx.drawImage(img, 0, 0);
+
+      // Extract the pixel data
+      const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height).data;
+      //console.log(imageData);
+      for(let j = 1; j < (width-1)/sliceWidth;j++){
+        fullArray[j-1]=[];
+        for(let i = 1; i < height/sliceHeight+1;i++){
+          fullArray[j-1][i-1]=[];
+          for(let k = 0; k < sliceHeight-2;k++){
+            fullArray[j-1][i-1][k]=[];
+            for(let l = 0; l < sliceWidth-1;l++){
+              const x = ((j-1)*sliceWidth)+(1+l);
+              const y = ((i-1)*sliceHeight)+(1+k);
+              const index = (y * canvas1.width + x) * 4;
+              const r = imageData[index];
+              const g = imageData[index + 1];
+              const b = imageData[index + 2];
+              const a = imageData[index + 3];
+      
+              //console.log(`Pixel at (${x}, ${y}) - RGBA: (${r}, ${g}, ${b}, ${a})`);
+              if(imageData[index+3]==0){
+                fullArray[j-1][i-1][k][l] = 0;
+              }else{
+                fullArray[j-1][i-1][k][l] = 1;
+                //console.log('isNOTTrans!!!:  '+ parseInt(((j-1)*sliceWidth)+(1+l))+' | '+ parseInt(((i-1)*sliceHeight)+(1+k)));
+              }
+            }
+          }
+        }
+      }
+    };
+
+    // Set the src attribute to start loading the image
+    img.src = 'sprites/weapons.png';
+    console.log('weapon');
+    console.log(fullArray);
+    return {
+      fullArray
+    };
+
+}
+
+function setMapArray(sliceWidth, sliceHeight,i) {
+
+  // Create an Image object
+   const img = new Image();
+   let fullArray = new Array(328);
+   for(let i = 0; i < fullArray.length;i++){
+    fullArray[i]=new Array(272);
+   }
+   // Set up a callback for when the image is loaded
+   img.onload = function() {
+     // Create a canvas to draw the image onto
+     const canvas2 = document.createElement('canvas');
+     canvas2.width = img.width;
+     canvas2.height = img.height;
+     const ctx = canvas2.getContext('2d');
+
+     // Draw the image onto the canvas
+     ctx.drawImage(img, 0, 0);
+
+     // Extract the pixel data
+     const imageData = ctx.getImageData(0, 0, canvas2.width, canvas2.height).data;
+     //console.log(imageData);
+    for(let k = 0; k < sliceHeight;k++){
+      for(let l = 0; l < sliceWidth;l++){
+        const x = l;
+        const y = k;
+        const index = (y * canvas2.width + x) * 4;
+        const r = imageData[index];
+        const g = imageData[index + 1];
+        const b = imageData[index + 2];
+        const a = imageData[index + 3];
+        //console.log(`Pixel at (${x}, ${y}) - RGBA: (${r}, ${g}, ${b}, ${a})`);
+        if(r==255 && g==255 && b==255){
+          fullArray[k][l] = 0;
+        }else if(r==0 && g==0 && b==0){
+          fullArray[k][l] = 1;
+        }else if(r==237 && g==28 && b==36){
+          fullArray[k][l] = 2;
+          //rot
+        }else if(r==0 && g==162 && b==232){
+          fullArray[k][l] = 3;
+          //blau
+        }else if(r==34 && g==177 && b==76){
+          fullArray[k][l] = 4;
+          //grün
+        }else if(r==255 && g==242 && b==0){
+          fullArray[k][l] = 5;
+          //gelb
+        }else{
+          fullArray[k][l] = 1;
+          //console.log('r= '+imageData[index]+'  '+'g= '+imageData[index+1]+'  '+'b= '+imageData[index+2]+'  '+'t= '+imageData[index+3]);
+          //console.log('isNOTTrans!!!:  '+ parseInt(((j-1)*sliceWidth)+(1+l))+' | '+ parseInt(((i-1)*sliceHeight)+(1+k)));
+        }
+      }
+    }
+   };
+
+   // Set the src attribute to start loading the image
+   img.src = 'sprites/collison'+i+'.png?=7';
+   console.log('maps');
+   console.log(fullArray);
+   return {
+     fullArray
+   };
+
+}
+
+
+
+function setHitArray(width, height, sliceWidth, sliceHeight) {
+
+  // Create an Image object
+   const img = new Image();
+   let fullArray = [];
+   // Set up a callback for when the image is loaded
+   img.onload = function() {
+     // Create a canvas to draw the image onto
+     const canvas2 = document.createElement('canvas');
+     canvas2.width = img.width;
+     canvas2.height = img.height;
+     const ctx = canvas2.getContext('2d');
+
+     // Draw the image onto the canvas
+     ctx.drawImage(img, 0, 0);
+
+     // Extract the pixel data
+     const imageData = ctx.getImageData(0, 0, canvas2.width, canvas2.height).data;
+     //console.log(imageData);
+     for(let j = 1; j <= (width-1)/sliceWidth;j++){
+       fullArray[j-1]=[];
+       for(let i = 1; i < height/sliceHeight+1;i++){
+         fullArray[j-1][i-1]=[];
+         for(let k = 0; k < sliceHeight-2;k++){
+           fullArray[j-1][i-1][k]=[];
+           for(let l = 0; l < sliceWidth-1;l++){
+             const x = ((j-1)*sliceWidth)+(1+l);
+             const y = ((i-1)*sliceHeight)+(1+k);
+             const index = (y * canvas2.width + x) * 4;
+             const r = imageData[index];
+             const g = imageData[index + 1];
+             const b = imageData[index + 2];
+             const a = imageData[index + 3];
+     
+             //console.log(`Pixel at (${x}, ${y}) - RGBA: (${r}, ${g}, ${b}, ${a})`);
+             if(imageData[index+3]==0){
+               fullArray[j-1][i-1][k][l] = 0;
+             }else{
+               fullArray[j-1][i-1][k][l] = 1;
+               //console.log('isNOTTrans!!!:  '+ parseInt(((j-1)*sliceWidth)+(1+l))+' | '+ parseInt(((i-1)*sliceHeight)+(1+k)));
+             }
+           }
+         }
+       }
+     }
+   };
+
+   // Set the src attribute to start loading the image
+   img.src = 'sprites/testcrabs.png';
+   console.log('cranks');
+   console.log(fullArray);
+   return {
+     fullArray
+   };
+
+}
+

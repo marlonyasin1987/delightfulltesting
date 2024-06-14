@@ -58,7 +58,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -77,7 +77,7 @@ class Being extends Spriteelement {
 		}
 		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
 		if(this.directioncounter==0){
-			if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false){
+			if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false){
 				this.on_s_p_x = this.on_s_p_x-1;
 				this.on_s_p_x_r = this.on_s_p_x_r-1;
 			}else{
@@ -94,10 +94,10 @@ class Being extends Spriteelement {
 					this.stance = stancey;
 					return false;
 				}else{
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false){
 						this.on_s_p_y = this.on_s_p_y -1;
 						this.on_s_p_y_r = this.on_s_p_y_r -1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false){
 							this.on_s_p_x = this.on_s_p_x-1;
 							this.on_s_p_x_r = this.on_s_p_x_r-1;
 						}else{
@@ -115,10 +115,10 @@ class Being extends Spriteelement {
 				}
 			}else{
 				if(this.directioncounter==(this.directioncountermax+1)/2){
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false){
 						this.on_s_p_y = this.on_s_p_y +1;
 						this.on_s_p_y_r = this.on_s_p_y_r +1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false){
 							this.on_s_p_x = this.on_s_p_x-1;
 							this.on_s_p_x_r = this.on_s_p_x_r-1;
 						}else{
@@ -162,7 +162,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -178,7 +178,7 @@ class Being extends Spriteelement {
 		}
 		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
 		if(this.directioncounter==0){
-			if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false){
+			if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false){
 				this.on_s_p_x = this.on_s_p_x+1;
 				this.on_s_p_x_r = this.on_s_p_x_r+1;
 			}else{
@@ -195,10 +195,10 @@ class Being extends Spriteelement {
 					this.stance = stancey;
 					return false;
 				}else{
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false){
 						this.on_s_p_y = this.on_s_p_y -1;
 						this.on_s_p_y_r = this.on_s_p_y_r -1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false){
 							this.on_s_p_x = this.on_s_p_x+1;
 							this.on_s_p_x_r = this.on_s_p_x_r+1;
 						}else{
@@ -216,10 +216,10 @@ class Being extends Spriteelement {
 				}
 			}else{
 				if(this.directioncounter==(this.directioncountermax+1)/2){
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false){
 						this.on_s_p_y = this.on_s_p_y +1;
 						this.on_s_p_y_r = this.on_s_p_y_r +1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false){
 							this.on_s_p_x = this.on_s_p_x+1;
 							this.on_s_p_x_r = this.on_s_p_x_r+1;
 						}else{
@@ -263,7 +263,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -279,7 +279,7 @@ class Being extends Spriteelement {
 		}
 		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
 		if(this.directioncounter==0){
-			if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false){
+			if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false){
 				this.on_s_p_y = this.on_s_p_y -1;
 				this.on_s_p_y_r = this.on_s_p_y_r -1;	
 			}else{
@@ -295,10 +295,10 @@ class Being extends Spriteelement {
 					this.directioncountermax = 0;
 					return false;
 				}else{
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false){
 						this.on_s_p_x = this.on_s_p_x+1;
 						this.on_s_p_x_r = this.on_s_p_x_r+1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false){
 							this.on_s_p_y = this.on_s_p_y -1;
 							this.on_s_p_y_r = this.on_s_p_y_r -1;
 						}else{
@@ -316,10 +316,10 @@ class Being extends Spriteelement {
 				}
 			}else{
 				if(this.directioncounter==(this.directioncountermax+1)/2){
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false){
 						this.on_s_p_x = this.on_s_p_x-1;
 						this.on_s_p_x_r = this.on_s_p_x_r-1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'up') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'up') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false){
 							this.on_s_p_y = this.on_s_p_y -1;
 							this.on_s_p_y_r = this.on_s_p_y_r -1;	
 						}else{
@@ -363,7 +363,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -379,7 +379,7 @@ class Being extends Spriteelement {
 		}
 		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
 		if(this.directioncounter==0){
-			if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false){
+			if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false){
 				this.on_s_p_y = this.on_s_p_y+1;
 				this.on_s_p_y_r = this.on_s_p_y_r+1;	
 			}else{
@@ -396,10 +396,10 @@ class Being extends Spriteelement {
 					this.stance = stancey;
 					return false;
 				}else{
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false){
 						this.on_s_p_x = this.on_s_p_x+1;
 						this.on_s_p_x_r = this.on_s_p_x_r+1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'right') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'right') == false){
 							this.on_s_p_y = this.on_s_p_y+1;
 							this.on_s_p_y_r = this.on_s_p_y_r+1;
 						}else{
@@ -417,10 +417,10 @@ class Being extends Spriteelement {
 				}
 			}else{
 				if(this.directioncounter==(this.directioncountermax+1)/2){
-					if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false){
+					if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false){
 						this.on_s_p_x = this.on_s_p_x-1;
 						this.on_s_p_x_r = this.on_s_p_x_r-1;
-						if(this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'down') == false && this.checkOtherBeingCollition(this.on_s_p_x_r,this.on_s_p_y_r,this.g_w,this.g_h,'left') == false){
+						if(this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'down') == false && this.checkOtherBeingCollition(0,8,this.g_w,this.g_h,'left') == false){
 							this.on_s_p_y = this.on_s_p_y+1;
 							this.on_s_p_y_r = this.on_s_p_y_r+1;	
 						}else{
@@ -513,10 +513,42 @@ class Being extends Spriteelement {
 	}
 
 
-	checkOtherBeingCollition(ownX,ownY,ownWidth,ownHeight, direction){
+	checkOtherBeingCollition(ownX,ownY,ownWidth,ownHeight,direction){
+		let canNotMove = false;
+		for(i=0;i<NpcArray.length;i++){
+			if(NpcArray[i] != null && i != (this.id - 8) && NpcArray[i].id != this.id){
+				if(direction == 'left'){
+					if(this.checkTouchingArea(NpcArray[i].on_s_p_x_r+1,NpcArray[i].on_s_p_y_r,8,NpcArray[i].on_s_s_h,NpcArray[i].on_s_s_w,ownWidth,ownHeight,ownX,ownY)){
+						canNotMove = true;
+						//console.log('can not move');
+					}
+				}else if(direction == 'right'){
+					if(this.checkTouchingArea(NpcArray[i].on_s_p_x_r-1,NpcArray[i].on_s_p_y_r,8,NpcArray[i].on_s_s_h,NpcArray[i].on_s_s_w,ownWidth,ownHeight,ownX,ownY)){
+						canNotMove = true;
+						//console.log('can not move');
+					}
+				}else if(direction == 'up'){
+					if(this.checkTouchingArea(NpcArray[i].on_s_p_x_r,NpcArray[i].on_s_p_y_r+1,8,NpcArray[i].on_s_s_h,NpcArray[i].on_s_s_w,ownWidth,ownHeight,ownX,ownY)){
+						canNotMove = true;
+						//console.log('can not move');
+					}
+				}else if(direction == 'down'){
+					if(this.checkTouchingArea(NpcArray[i].on_s_p_x_r,NpcArray[i].on_s_p_y_r-1,8,NpcArray[i].on_s_s_h,NpcArray[i].on_s_s_w,ownWidth,ownHeight,ownX,ownY)){
+						canNotMove = true;
+						//console.log('can not move');
+					}
+				}	
+			}
+		}
+		return canNotMove;
+	}
+
+	checkOtherBeingCollition2(ownX,ownY,ownWidth,ownHeight, direction){
 		let canMove = false;
 		for(i=0;i<NpcArray.length;i++){
 			if(NpcArray[i] != null && i != (this.id - 8)){
+
+				
 				let constructedArrayLength = NpcArray[i].g_w + ownWidth - 1;
 				let constructedArrayHeight = NpcArray[i].g_h + ownHeight - 1;
 				let upperHalf = 0;
@@ -565,9 +597,9 @@ class Being extends Spriteelement {
 						}
 					}
 				}
-				for(j=0;j<constructedArray.length-1;j++){
+				for(let j=0;j<constructedArray.length-1;j++){
 					//console.log('Npc[i].on_s_p_y_r - ((16 - Npc[i].g_w) - 1) + j :     ',Npc[0].on_s_p_y_r - (((16 - Npc[0].g_h) - ownHeight)) + j);
-					for(k=0;k<constructedArray[j].length-1;k++){
+					for(let k=0;k<constructedArray[j].length-1;k++){
 						if(constructedArray[j][k]!=0){
 							if(direction == 'left'){
 								if((NpcArray[i].on_s_p_x_r + 1) - (ownWidth - 1) + k == ownX && (((NpcArray[i].on_s_p_y_r+NpcArray[i].on_s_s_h)-NpcArray[i].g_h)-this.on_s_s_h) + j + 1 == ownY){
@@ -679,31 +711,24 @@ class Being extends Spriteelement {
 		return canMove;
 	}
 
-	checkTouchingArea(ownX,ownY,ownHeight,ownWidth,hitsquareWidth,hitsquareHeight,hitsquarePosiX,hitsquarePosiY){
+	checkTouchingArea(ownX,ownY,ownHeight,on_s_s_h,ownWidth,hitsquareWidth,hitsquareHeight,hitsquarePosiX,hitsquarePosiY){
 
-		let majorBoxHeight = (ownHeight * 2)+(hitsquareHeight-2);
-		let majorBoxWidth = (ownWidth * 2)+(hitsquareWidth-2);
-
-		let majorBoxHeightNew = majorBoxHeight-((majorBoxHeight - 8) / 2);
-		let majorBoxWidthNew = majorBoxWidth-((majorBoxWidth - 8) / 2);
-
-		let majorBoxY = (this.on_s_p_y_r+hitsquarePosiY) - (majorBoxHeight-majorBoxHeightNew);
-		let majorBoxX = (this.on_s_p_x_r+hitsquarePosiX) - (majorBoxWidth-majorBoxWidthNew);
-		
-		//console.log('majorBoxWidth: ' + majorBoxWidth);
-		//console.log('majorBoxHeight: ' + majorBoxHeight);
-		//console.log('majorBoxWidthNew: ' + majorBoxWidthNew);
+		let majorBoxHeight = (ownHeight+hitsquareHeight)-1;
+		let majorBoxWidth = (ownWidth+hitsquareWidth)-1;
+		let majorBoxY = ((this.on_s_p_y_r+hitsquarePosiY)-ownHeight);
+		let majorBoxX = ((this.on_s_p_x_r+hitsquarePosiX)-ownWidth) + 1;
+		//console.log('checktouchingarea ');
+		//console.log('ownHeight: ' + ownHeight);
+		//console.log('ownWidth: ' + ownWidth);
 		//console.log('majorBoxHeightNew: ' + majorBoxHeightNew);
 		//console.log('this.on_s_p_y_r+hitsquarePosiY: ' + parseInt(this.on_s_p_y_r+hitsquarePosiY));
 		//console.log('this.on_s_p_x_r+hitsquarePosiX: ' + parseInt(this.on_s_p_x_r+hitsquarePosiX));
 		//console.log('majorBoX: ' + majorBoxX);
 		//console.log('majorBoxY: ' + majorBoxY);
 
-		for(let i=0;i<=majorBoxHeightNew-1;i++){
-			for(let j=0;j<=majorBoxWidthNew-1;j++){
-				if(majorBoxY+i == ownY+(24-ownHeight) && majorBoxX+j == ownX){
-					return true;
-				}
+		if(ownY+(on_s_s_h-ownHeight)>=majorBoxY&&ownY+(on_s_s_h-ownHeight)<=majorBoxY+majorBoxHeight){
+			if(ownX>=majorBoxX&&ownX<=majorBoxX+majorBoxWidth){
+				return true;
 			}
 		}
 	}

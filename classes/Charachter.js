@@ -30,13 +30,14 @@ class Charachteri extends Being {
 		this.damageLvl = 5;
 		this.damageLvlInitial = 5;
 		this.life = 100;
-		this.beingAttackedTriggerCounter = 75;
-
+		this.beingAttackedTriggerCounter = 0;
+		this.fightcounter = 0;
 	}
 
 
 	
 	playerFunction(){
+		this.checkIfBeingAttacked();
 		this.damageLvl = this.damageLvlInitial;
 		if(this.controlhandler == 1){
 			this.playerControlShemaPause();	
@@ -45,8 +46,6 @@ class Charachteri extends Being {
 			this.keyboardListener();
 			this.playerControlShemaPause();	
 			this.playerControlShema();
-			this.checkIfStillBeingAttacked();
-			this.checkIfBeingAttacked();
 			if(this.fastwalktrigger!=2){
 				if(this.fastwalktriggertimmer>0){
 					if(this.fastwalktriggertimmer>16){
@@ -73,7 +72,7 @@ class Charachteri extends Being {
 			this.stanceChanger(3,4);
 			this.stillStand();
 		}else if(this.momentevent == 'fight-stand'){
-			this.stanceChanger(5,6);
+			this.stanceChanger(1,2);
 			this.stillStand();
 		}else if(this.momentevent == 'walk-left'){
 			this.playerWalkLeft();
@@ -189,7 +188,7 @@ class Charachteri extends Being {
 			this.fightStandRightDown();	
 		}else if(this.momentevent == 'being-attacked'){
 			this.beingAttacked();
-		}console.log(Player.momentevent);
+		}
 		//console.log('this.momentevent: ' + this.momentevent + '   action-mode: ' + this.actionmode + '   no control: ' + this.controlhandler);
 		//console.log('this.momentevent: ' + this.momentevent + '   action-mode: ' + this.actionmode + '   no control: ' + this.controlhandler + '   keyDownCOunter: ' + keyDownCounterCounter + '   this.jumptrigger: ' + this.jumptrigger + '  fastwalkactive: ' + fastwalkactive + '  fastwalktimmer: ' + this.fastwalktriggertimmer);
 	}	
@@ -207,7 +206,7 @@ class Charachteri extends Being {
 					////console.log('this.fastwalktrigger' + fastwalktrigger);
 				}else{
 					this.fastwalktrigger= 2;
-					console.log('this.fastwalktrigger' + this.fastwalktrigger);
+					//console.log('this.fastwalktrigger' + this.fastwalktrigger);
 				}
 			}else{
 				this.fastwalktrigger= 0;
@@ -1050,6 +1049,7 @@ class Charachteri extends Being {
 			this.fastwalktriggeration();
 			this.momentevent = 'just-stand';
 		}
+
 		if(this.actionmode == 'normal'){
 			if(CapArray[4] == 1){
 
@@ -1176,49 +1176,70 @@ class Charachteri extends Being {
 			}
 		}else if(this.actionmode == 'fighting'){
 			this.fighttriggeration('normal');
-			if(this.keyDownCounterCounter > 10){
-				if(CapArray[0] == 0 && CapArray[1] == 0 && CapArray[2] == 0 && CapArray[3] == 0){
-					//stillstand
-					this.momentevent = 'fight-stand';
-				}
-				else if(CapArray[0] == 1 && CapArray[1] == 1){
-					//leftupAttack
-					this.momenteventFightStandLeftUp(20);				
-				}
-				else if(CapArray[0] == 1 && CapArray[3] == 1){
-					//leftdownAttack
-					this.momenteventFightStandLeftDown(20);
-				}
-				else if(CapArray[1] == 1 && CapArray[2] == 1 ){
-					//rightupAttack
-					this.momenteventFightStandRightUp(20);				
-				}
-				else if(CapArray[2] == 1 && CapArray[3] == 1){
-					//rightdownAttack
-					this.momenteventFightStandRightDown(20);
-				}
-				else if(CapArray[0] == 1){
-					//leftAttack
-					this.momenteventFightStandLeft(20);
-				}
-				else if(CapArray[1] == 1 ){
-					//upAttack
-					this.momenteventFightStandUp(20);
-				}
-				else if(CapArray[2] == 1 ){
-					//rightAttack
-					this.momenteventFightStandRight(20);
-				}
-				else if(CapArray[3] == 1){
-					//downAttack
-					this.momenteventFightStandDown(20);
-				}else{
-					//console.log('fucked');
-				}
-				this.keyDownCounterCounter = 0;			
+			if(CapArray[0] == 0 && CapArray[1] == 0 && CapArray[2] == 0 && CapArray[3] == 0){
+				//stillstand
+				this.momentevent = 'fight-stand';
 			}else{
-				this.keyDownCounterCounter++;
+				if(this.fightcounter==0){
+					console.log('fightcounter=0!');
+					if(CapArray[0] == 1){
+						//leftAttack
+						this.momenteventFightStandLeft(20);
+					}
+					else if(CapArray[1] == 1 ){
+						//upAttack
+						this.momenteventFightStandUp(20);
+					}
+					else if(CapArray[2] == 1 ){
+						//rightAttack
+						this.momenteventFightStandRight(20);
+					}
+					else if(CapArray[3] == 1){
+						//downAttack
+						this.momenteventFightStandDown(20);
+					}else{
+						//console.log('fucked');
+					}
+					this.fightcounter = 10;
+				}else{
+					if(CapArray[0] == 1){
+						if(CapArray[1] == 1 && CapArray[0] == 1){
+							//leftupAttack
+							this.momenteventFightStandLeftUp(20);				
+						}else if(CapArray[3] == 1 && CapArray[0] == 1){
+							//leftdownAttack
+							this.momenteventFightStandLeftDown(20);
+						}				
+					}else if(CapArray[1] == 1){
+						if(CapArray[0] == 1 && CapArray[1] == 1){
+							//leftupAttack
+							this.momenteventFightStandLeftUp(20);				
+						}else if(CapArray[2] == 1 && CapArray[1] == 1){
+							//leftdownAttack
+							this.momenteventFightStandRightUp(20);
+						}				
+					}else if(CapArray[2] == 1){
+						if(CapArray[1] == 1 && CapArray[2] == 1){
+							//leftupAttack
+							this.momenteventFightStandRightUp(20);			
+						}else if(CapArray[3] == 1 && CapArray[2] == 1){
+							//leftdownAttack
+							this.momenteventFightStandRightDown(20);	
+						}				
+					}else if(CapArray[3] == 1){
+						if(CapArray[0] == 1 && CapArray[3] == 1){
+							//leftupAttack
+							this.momenteventFightStandLeftDown(20);				
+						}else if(CapArray[2] == 1 && CapArray[3] == 1){
+							//leftdownAttack
+							this.momenteventFightStandRightDown(20);
+						}				
+					}
+					this.fightcounter--;
+				}	
 			}
+
+			
 		}else if(this.actionmode == 'sneaking'){
 			this.sneaktriggeration('normal');
 			if(CapArray[0] == 0 && CapArray[1] == 0 && CapArray[2] == 0 && CapArray[3] == 0){
@@ -1272,12 +1293,10 @@ class Charachteri extends Being {
 		}else if(this.pausetrigger == 0){
 			if(CapArray[6] == 1){
 				this.pausetrigger = 1;
-				if(pause == 1){
-					pause = 0;
-					//console.log('pauseentriggers');
+				if(CurrentGLobalState[0] != 'pause'){
+					CurrentGLobalState[0] = 'pause';
 				}else{
-					pause = 1;
-					//console.log('pause getriggerd');
+					CurrentGLobalState[0] = 'inGame';
 				}
 			}else if(CapArray[6] == 0){
 				
@@ -1285,8 +1304,21 @@ class Charachteri extends Being {
 		}
 	}
 
+	playerControlShemaStartScreen(){
 
+	}	
 
+	playerControlShemaDeath(){
+
+	}	
+
+	playerControlShemaCredits(){
+
+	}
+
+	playerControlShemaTalking(){
+
+	}
 	//////////////////////////////////////////////////////////////////////// EVENT Funktions /////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////// Walk //////////////////////////////////
 	playerWalkLeft() {
@@ -1564,24 +1596,57 @@ class Charachteri extends Being {
 		//leftSneak
 		this.moveLeft(3);
 		this.anim(9,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
+		
 	}
 
 	playerSneakRight() {
 		//rightSneak
 		this.moveRight(4);
 		this.anim(10,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakUp() {
 		//upSneak
 		this.moveUp(0,1);
 		this.anim(11,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakDown() {
 		//downSneak
 		this.moveDown(0,1);
 		this.anim(10,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakLeftUp() {
@@ -1589,6 +1654,14 @@ class Charachteri extends Being {
 		this.moveLeft(3);
 		this.moveUp(0,1);
 		this.anim(11,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakLeftDown() {
@@ -1596,6 +1669,14 @@ class Charachteri extends Being {
 		this.moveLeft(3);
 		this.moveDown(0,1);
 		this.anim(9,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakRightUp() {
@@ -1603,6 +1684,14 @@ class Charachteri extends Being {
 		this.moveRight(4);
 		this.moveUp(0,1);
 		this.anim(12,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	playerSneakRightDown() {
@@ -1610,6 +1699,14 @@ class Charachteri extends Being {
 		this.moveRight(4);
 		this.moveDown(0,1);
 		this.anim(10,20);
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[5] = 0;
+		CapArray[6] = 0;
+		CapArray[7] = 1;
 	}
 
 	////////////////////////////////////////////// Fight Run /////////////////////////////////////
@@ -1802,6 +1899,7 @@ class Charachteri extends Being {
 		}else if(this.on_s_p_x_r < 91){
 			container.position.x = container.position.x + 0;
 		}
+		//console.log('container.position.y: '+container.position.x);
 	}
 
 	rightScroll(){
@@ -1812,6 +1910,7 @@ class Charachteri extends Being {
 		}else if(this.on_s_p_x_r < 90){
 			container.position.x = container.position.x - 0;
 		}
+		//console.log('container.position.y: '+container.position.x);
 	}
 
 
@@ -1823,6 +1922,7 @@ class Charachteri extends Being {
 		}else if(this.on_s_p_y_r < 119){
 			container.position.y = container.position.y + 0;
 		}
+		//console.log('container.position.y: '+container.position.y);
 	}
 
 	downScroll(){
@@ -1833,6 +1933,7 @@ class Charachteri extends Being {
 		}else if(this.on_s_p_y_r < 118){
 			container.position.y = container.position.y - 0;
 		}
+		//console.log('container.position.y: '+container.position.y);
 	}
 
 
@@ -1996,13 +2097,12 @@ class Charachteri extends Being {
 
 	////////////////////////////////////////////// Fight Run /////////////////////////////////////
 	fightRunLeft(){
-		this.Weapon = new Spriteelement(5,1,"",1,859,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-16,this.on_s_p_y_r-4,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2049,13 +2149,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunRight(){
-		this.Weapon = new Spriteelement(5,1,"",18,859,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+16,this.on_s_p_y_r-4,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
+		this.Weapon = new Spriteelement(5,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2102,13 +2201,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,840,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+6,this.on_s_p_y_r-10,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2155,13 +2253,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,840,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+1,this.on_s_p_y_r+23,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2207,13 +2304,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunLeftUp(){
-		this.Weapon = new Spriteelement(5,1,"",1,895,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-6,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2243,13 +2339,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunLeftDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,816,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-7,this.on_s_p_y_r+18,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2279,13 +2374,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunRightUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,895,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+6,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2315,13 +2409,12 @@ class Charachteri extends Being {
 	}
 
 	fightRunRightDown(){
-		this.Weapon = new Spriteelement(5,1,"",18,816,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+7,this.on_s_p_y_r+18,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlercounter==0){
 			this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 			this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
@@ -2352,7 +2445,7 @@ class Charachteri extends Being {
 
 	////////////////////////////////////////////// Fight Stand /////////////////////////////////////
 	fightStandLeft(){
-		this.Weapon = new Spriteelement(5,1,"",1,859,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-16,this.on_s_p_y_r-2,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
@@ -2362,8 +2455,7 @@ class Charachteri extends Being {
 			this.moveLeft(5);
 			this.anim(21,15);
 			this.moveRight(6);
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlermax==this.controlhandlercounter){
 			this.fightstandtriggerleft=1;
 			this.fightstandtriggerright = 0;
@@ -2380,7 +2472,7 @@ class Charachteri extends Being {
 	}
 
 	fightStandRight(){
-		this.Weapon = new Spriteelement(5,1,"",18,859,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+16,this.on_s_p_y_r-2,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
+		this.Weapon = new Spriteelement(5,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
@@ -2390,8 +2482,7 @@ class Charachteri extends Being {
 			this.moveRight(6);
 			this.anim(22,15);
 			this.moveLeft(5);
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlermax==this.controlhandlercounter){
 			this.fightstandtriggerleft = 0;
 			this.fightstandtriggerright = 1;
@@ -2408,7 +2499,7 @@ class Charachteri extends Being {
 	}
 
 	fightStandUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,840,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+6,this.on_s_p_y_r-16,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
@@ -2418,8 +2509,7 @@ class Charachteri extends Being {
 			this.moveUp(0,1);
 			this.anim(23,15);
 			this.moveDown(0,1);
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 		}else if(this.controlhandlermax==this.controlhandlercounter){
 			this.fightstandtriggerleft = 0;
 			this.fightstandtriggerright = 0;
@@ -2436,15 +2526,14 @@ class Charachteri extends Being {
 	}
 
 	fightStandDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,840,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r+16,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 			this.moveDown(0,1);
 			this.anim(24,15);
 			this.moveUp(0,1);
@@ -2464,15 +2553,14 @@ class Charachteri extends Being {
 	}
 
 	fightStandLeftUp(){
-		this.Weapon = new Spriteelement(5,1,"",1,895,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-6,this.on_s_p_y_r-6,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);	
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 			this.moveLeft(1,1);
 			this.moveUp(0,1);
 			this.anim(27);
@@ -2495,15 +2583,14 @@ class Charachteri extends Being {
 	}
 
 	fightStandLeftDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,816,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r-7,this.on_s_p_y_r+11,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 			this.moveLeft(1,1);
 			this.moveDown(0,1);
 			this.anim(25);
@@ -2526,15 +2613,14 @@ class Charachteri extends Being {
 	}
 
 	fightStandRightUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,895,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+6,this.on_s_p_y_r-6,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 			this.moveRight(2,1);
 			this.moveUp(0,1);
 			this.anim(28);
@@ -2557,15 +2643,14 @@ class Charachteri extends Being {
 	}
 
 	fightStandRightDown(){
-		this.Weapon = new Spriteelement(5,1,"",18,816,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r+7,this.on_s_p_y_r+11,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(5,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
 		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
-			this.audio = attackSound;
-			this.audio.play();
+			attackSound.play();
 			this.moveRight(2,1);
 			this.moveDown(0,1);
 			this.anim(26);
@@ -2598,12 +2683,16 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
+				}
+				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] == 4){
+					changeLevelDirection = -1;
+					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2655,12 +2744,16 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
+				}
+				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] == 2){
+					changeLevelDirection = 1;
+					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2713,12 +2806,16 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki* 2;
+				}
+				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] == 5){
+					CurrentGLobalState[0] = 'changeLevel';
+					changeLevelDirection = -4;
 				}
 			}else{
 				if(i<3){
@@ -2761,6 +2858,7 @@ class Charachteri extends Being {
 	}		
 	
 	moveDown(stancey,playerornot){
+		console.log('CurrentMapLocation: '+CurrentMapLocation);
 		var k = 2;
 		var ki = 2;
 		for(i=1;i<=this.g_w-2;i++){
@@ -2770,12 +2868,16 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(FgroundMapArray[this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] == 1){
+			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
+				}
+				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] == 3){
+					changeLevelDirection = 4;
+					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2820,79 +2922,45 @@ class Charachteri extends Being {
 	checkIfBeingAttacked(){
 		for(let i=0;i<=NpcArray.length-1;i++){
 			if(NpcArray[i] != null && i != (this.id - 8)){
-				if(NpcArray[i].momentevent=='attack'){
+				//console.log('this.beingAttackedTriggerCounter')
+				//console.log(this.beingAttackedTriggerCounter);
+				if(NpcArray[i].isInAtackRange == true && NpcArray[i].doAttack == true && this.controlhandler != 1 && this.beingAttackedTriggerCounter == 0){
+					this.controlhandler = 1;
+					this.controlhandlercounter = 1;
+					this.controlhandlermax = 50;
 					this.momentevent='being-attacked';
-					console.log('NpcArray[i].momentevent')
-					console.log(NpcArray[i].momentevent);
+					this.beingAttackedTriggerCounter = 125;
+					console.log('this.momentevent: ' + this.momentevent);
+					this.life= this.life-20;
+					if(this.life==0){
+						CurrentGLobalState[0] = 'pause';
+					}
 				}else{
 					//console.log('else ?');
 				}
 			}
 		}
-	}
-
-	checkIfStillBeingAttacked(){
-		if(this.beingAttackedTriggerCounter==0){
-			this.momentevent='just-stand';
+		if(this.beingAttackedTriggerCounter!=0){
+			if(this.beingAttackedTriggerCounter%10>5){
+				this.off_s_p_x = 1;
+				//this.anim(8,this.anim_s);
+			}else{
+				this.off_s_p_x = 40;
+			}
+			if(this.beingAttackedTriggerCounter==1){
+				this.off_s_p_x = 1;
+			}
+			this.beingAttackedTriggerCounter--;
 		}
 	}
 
 	beingAttacked(){
-		this.beingAttackedTriggerCounter = 75;
-		if(this.beingAttackedTriggerCounter == 0){
-			this.beingAttackedTriggerCounter = 50;
-			if(this.life <= 0){
-				//this.dead = true;
-			}
-			this.beingAttacked = false;
+		console.log('being_attackedè!');
+		if(this.controlhandlercounter == this.controlhandlermax){
+			this.controlhandler = 0;
+			this.controlhandlercounter = 0;
 		}else{
-
-			if(this.beingAttackedTriggerCounter>97){
-				//this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>94){
-				this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>82){
-				//this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>79){
-				this.anim(9,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>67){
-				//this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>64){
-				this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>52){
-				//this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>49){
-				this.anim(9,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>45){
-				//this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>40){
-				this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>35){
-				//this.anim(9,20);
-			}else if(this.beingAttackedTriggerCounter>30){
-				this.anim(9,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>25){
-				//this.anim(9,20);
-			}else if(this.beingAttackedTriggerCounter>20){
-				this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>15){
-				//this.anim(9,20);
-			}else if(this.beingAttackedTriggerCounter>10){
-				this.anim(9,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>5){
-				//this.anim(9,20);
-			}else if(this.beingAttackedTriggerCounter>4){
-				this.anim(8,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>3){
-				//this.anim(9,20);
-			}else if(this.beingAttackedTriggerCounter>2){
-				this.anim(9,this.anim_s);
-			}else if(this.beingAttackedTriggerCounter>1){
-				//this.anim(9,20);
-			}else{
-				this.anim(8,20);
-			}
-			this.beingAttackedTriggerCounter--;
+			this.anim(8,this.anim_s);
 		}
 	}
 }

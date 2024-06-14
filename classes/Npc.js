@@ -16,6 +16,7 @@ class Npc extends Being {
 		this.directionsDown = ['left','up','right'];
 		this.directionChangerCounter = 30;
 		this.animDirection = 0;
+		this.isInAtackRange = false;
 	}
 
 
@@ -203,8 +204,8 @@ class Npc extends Being {
 		let startPointX = centerX - (range/2);
 		let startPointY = centerY - (range/2);
 		
-		for(i=0;i<=range;i++){
-			for(j=0;j<=range;j++){
+		for(let i=0;i<=range;i++){
+			for(let j=0;j<=range;j++){
 				if(Player.on_s_p_x_r == startPointX+i){
 					if(Player.on_s_p_y_r == startPointY+j){
 						return true;

@@ -18,7 +18,9 @@ class Spriteelement {
 	this.controlhandlercounter = 0;
 	this.controlhandlermax = 0;
 	this.uebereinstimmtwidth = 0;
-	this.anim_s = anim_s;	
+	this.anim_s = anim_s;
+
+	this.fadeState = 3;
   }
   
   
@@ -50,7 +52,6 @@ class Spriteelement {
 
 			if(notHere === false){
 				SGDA.forEach(function (value, key) {
-					//console.log(key+parseInt(self.on_s_s_h));
 					SGDA[key].forEach(function (value2, key2) {
 						if(value2.sgdaId == self.id){
 							SGDA[key].splice( key2 , 1 );
@@ -72,12 +73,21 @@ class Spriteelement {
 	
 	
 	GVS(id){
+		//console.log('GVS ID: '+id);
 		GV[id].position.x = this.on_s_p_x;
 		GV[id].position.y = this.on_s_p_y;
 		GV[id].tilePosition.x = -(this.off_s_p_x);
 		GV[id].tilePosition.y = -(this.off_s_p_y);
 		GV[id].width = this.on_s_s_w;
 		GV[id].height = this.on_s_s_h;
+	}
+	MVS(id){
+		MV[id].position.x = this.on_s_p_x;
+		MV[id].position.y = this.on_s_p_y;
+		MV[id].tilePosition.x = -this.fadeState*256;
+		MV[id].tilePosition.y = -(this.off_s_p_y);
+		MV[id].width = this.on_s_s_w;
+		MV[id].height = this.on_s_s_h;
 	}
 	
 

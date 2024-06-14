@@ -10,76 +10,80 @@ class Enemy extends Npc {
 		this.beingAttacked = false;
 		this.beingAttackedTriggerCounter = 75;
 		this.doAttack = false;
-		this.doAttackTriggerCounter = 75;
+		this.doAttackTriggerCounter = 50;
+		this.cantAttackAnymoreCounter = 0;
 		this.dead = false;
 		this.playerDmgHolder = 0;
 	}
 
-
-	enemyFunction(){
+	npcFunction(){
+		let animSillouette = 0;
+		if(this.off_s_p_x > 2){
+			animSillouette = 1;
+		}
 		if(this.dead != true){
 			if(Player.momentevent == 'fight-left'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[0],'left')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][0],'left',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-right'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[1],'right')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][1],'right',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}				
 			}else if(Player.momentevent == 'fight-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[2],'up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][2],'up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[3],'down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][3],'down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[7],'left-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][4],'left-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[5],'left-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][6],'left-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}else if(Player.momentevent == 'fight-right-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[6],'right-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][5],'right-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}				
 			}else if(Player.momentevent == 'fight-right-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[4],'right-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][6],'right-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}			
 			}else if(Player.momentevent == 'fight-left-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[0],'left')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][0],'left',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-right-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[1],'right')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][1],'right',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[3],'up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][2],'up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[2],'down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][3],'down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[6],'left-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][4],'left-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-left-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[4],'left-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][6],'left-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}else if(Player.momentevent == 'fight-right-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[7],'right-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][5],'right-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}			
 			}else if(Player.momentevent == 'fight-right-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[5],'right-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][7],'right-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}
@@ -197,47 +201,53 @@ class Enemy extends Npc {
 
 	//////////////////////////////////////////////////////////////////////// EVENT Funktions /////////////////////////////////////////////////////////////////
 	
-	checkOtherBeingCollitionBeingAttacked(ownX,ownY,weaponHitArrayCurrent,direction){
+	checkOtherBeingCollitionBeingAttacked(ownX,ownY,weaponHitArrayCurrent,direction,hitdetectionArray){
 		let beingHit = false;
-		//console.log('kokokokikiki');
+
 		for(let i=0;i<=weaponHitArrayCurrent.length-1;i++){
 			for(let j=0;j<=weaponHitArrayCurrent[i].length-1;j++){
 				if(weaponHitArrayCurrent[i][j]==1){
-					for(let p=0;p<=this.hitdetectionArray.length-1;p++){
-						for(let z=0;z<=this.hitdetectionArray[p].length-1;z++){
-							if(direction == 'left'){
-								if(ownX-weaponHitArrayCurrent[i].length+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-2)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'right'){
-								if(ownX+weaponHitArrayCurrent[i].length+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-2)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'up'){
-								if(ownX+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'down'){
-								if(ownX+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+Player.on_s_s_h+1)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'left-down'){
-								if(ownX-7+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+10)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'right-down'){
-								if(ownX+7+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+10)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'left-up'){
-								if(ownX-6+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && this.hitdetectionArray[p][z]==1){
-									beingHit = true;
-								}
-							}else if(direction == 'right-up'){
-								if(ownX+6+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && this.hitdetectionArray[p][z]==1){
+					for(let p=0;p<=hitdetectionArray[this.animDirection].length-1;p++){
+						for(let z=0;z<=hitdetectionArray[this.animDirection][p].length-1;z++){
+							if(hitdetectionArray[this.animDirection][p][z]==1){
+								if(ownY+i == this.on_s_p_y+p && ownX+j == this.on_s_p_x + z){
 									beingHit = true;
 								}
 							}
+							
+/* 							if(direction == 'left'){
+								if(ownX-weaponHitArrayCurrent[i].length+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-2)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'right'){
+								if(ownX+weaponHitArrayCurrent[i].length+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-2)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'up'){
+								if(ownX+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'down'){
+								if(ownX+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+Player.on_s_s_h+1)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'left-down'){
+								if(ownX-7+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+10)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'right-down'){
+								if(ownX+7+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY+10)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'left-up'){
+								if(ownX-6+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							}else if(direction == 'right-up'){
+								if(ownX+6+j == this.on_s_p_x_r+z && this.on_s_p_y_r+p == (ownY-6)+i && hitdetectionArray[this.animDirection][p][z]==1){
+									beingHit = true;
+								}
+							} */
 						}
 					}
 				}

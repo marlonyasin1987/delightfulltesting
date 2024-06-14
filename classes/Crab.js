@@ -4,75 +4,88 @@ class Crab extends Enemy {
 
 		this.sleepTriggerRandom = Math.floor(Math.random() * 10000);
 		this.sleepTriggerCounter = 0;
-
+		this.doAttackTriggerCounter = 75;
+		this.deathSoundPlayed = false;
 	}
 
 
 
-	crabFunction(){
+	npcFunction(){
 		if(this.dead != true){
+			if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,0,8)){
+				this.isInAtackRange = true;
+			}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,8,8)){
+				this.isInAtackRange = true;
+			}else{
+				this.isInAtackRange = false;
+			}
+
+			let animSillouette = 0;
+			if(this.off_s_p_x > 2){
+				animSillouette = 1;
+			}
 			if(Player.momentevent == 'fight-left'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[0],'left')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][0],'left',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-right'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[1],'right')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][1],'right',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}				
 			}else if(Player.momentevent == 'fight-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[3],'up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][2],'up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[2],'down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][3],'down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[7],'left-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][7],'left-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[5],'left-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][5],'left-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}else if(Player.momentevent == 'fight-right-up'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[6],'right-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][6],'right-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}				
 			}else if(Player.momentevent == 'fight-right-down'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[4],'right-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][4],'right-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}			
 			}else if(Player.momentevent == 'fight-left-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[0],'left')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][0],'left',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-right-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[1],'right')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][1],'right',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[3],'up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][2],'up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[2],'down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][3],'down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}
 			}else if(Player.momentevent == 'fight-left-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[6],'left-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][4],'left-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}	
 			}else if(Player.momentevent == 'fight-left-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[4],'left-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][6],'left-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}else if(Player.momentevent == 'fight-right-up-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[7],'right-up')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][5],'right-up',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}			
 			}else if(Player.momentevent == 'fight-right-down-stand'){
-				if(this.checkOtherBeingCollitionBeingAttacked(Player.on_s_p_x_r,Player.on_s_p_y_r,weaponHit[5],'right-down')){
+				if(this.checkOtherBeingCollitionBeingAttacked(Player.Weapon.on_s_p_x,Player.Weapon.on_s_p_y,weaponHit['fullArray'][0][7],'right-down',crabHit['fullArray'][animSillouette])){
 					this.beingAttacked = true;
 				}		
 			}
@@ -130,6 +143,7 @@ class Crab extends Enemy {
 						//this.anim(8,this.anim_s);
 					}else if(this.beingAttackedTriggerCounter>49){
 						this.anim(this.animDirection,this.anim_s);
+						crabDiesSound.play();
 					}else if(this.beingAttackedTriggerCounter>45){
 						//this.anim(8,this.anim_s);
 					}else if(this.beingAttackedTriggerCounter>40){
@@ -162,32 +176,47 @@ class Crab extends Enemy {
 					this.beingAttackedTriggerCounter--;
 				}
 			}else{
-				if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,18,14,8,0,0,4)){
-					this.anim(3,this.anim_s);
-					if(this.doAttackTriggerCounter == 0){
-						console.log('ever?');
-						this.doAttackTriggerCounter = 75;
-						this.momentevent='attack';
-					}else{
-						this.doAttackTriggerCounter--;
+				if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,0,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
+					this.momentevent='attack-left';
+					crabAttackSound.play();
+				}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,8,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
+					this.momentevent='attack-right';
+					crabAttackSound.play();
+				}
+				
+				if(this.cantAttackAnymoreCounter != 0){
+					this.cantAttackAnymoreCounter--;
+				}
+				if(this.momentevent=='attack-left'){
+					if(this.isInAtackRange==true){
+						this.doAttack = true;
 					}
-				}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,18,14,8,0,4,4)){
-					this.anim(2,this.anim_s);
 					if(this.doAttackTriggerCounter == 0){
 						this.doAttackTriggerCounter = 75;
-						this.momentevent='attack';
-					}else{
-						this.doAttackTriggerCounter--;
-					}
-				}else if(this.momentevent=='attack'){
-					if(this.doAttackTriggerCounter == 0){
-						this.doAttackTriggerCounter = 75;
+						this.cantAttackAnymoreCounter = 150;
 						this.momentevent='normal';
 					}else{
 						this.doAttackTriggerCounter--;
+						this.anim(3,this.anim_s);
+					}
+				}else if(this.momentevent=='attack-right'){
+					if(this.isInAtackRange==true){
+						this.doAttack = true;
+					}
+					if(this.doAttackTriggerCounter == 0){
+						this.doAttackTriggerCounter = 75;
+						this.cantAttackAnymoreCounter = 150;
+						this.momentevent='normal';
+					}else{
+						this.doAttackTriggerCounter--;
+						this.anim(2,this.anim_s);
 					}
 				}else{
+					this.doAttack = false;
 					this.sleepTriggerRandom = Math.floor(Math.random() * 10000);
+					if(this.checkIfISeePlayer(this.on_s_p_x_r, this.on_s_p_y_r, this.g_h, this.g_w,40)){
+						//this.walkToPlayer(this.on_s_p_x_r,this.on_s_p_y_r);
+					}
 					if(this.sleepTriggerCounter != 0){
 						if(this.direction == 'left'){
 							this.animDirection = 6;
