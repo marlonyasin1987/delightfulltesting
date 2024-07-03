@@ -12,9 +12,9 @@ class Crab extends Enemy {
 
 	npcFunction(){
 		if(this.dead != true){
-			if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,0,8)){
+			if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,6,8,0,8)){
 				this.isInAtackRange = true;
-			}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,8,8)){
+			}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,6,8,8,8)){
 				this.isInAtackRange = true;
 			}else{
 				this.isInAtackRange = false;
@@ -176,10 +176,10 @@ class Crab extends Enemy {
 					this.beingAttackedTriggerCounter--;
 				}
 			}else{
-				if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,0,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
+				if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,6,8,0,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
 					this.momentevent='attack-left';
 					crabAttackSound.play();
-				}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,8,8,8,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
+				}else if(this.checkTouchingArea(Player.on_s_p_x_r,Player.on_s_p_y_r,Player.g_h,Player.on_s_s_h,Player.g_w,6,8,8,8)&&this.doAttackTriggerCounter == 75 && this.cantAttackAnymoreCounter == 0){
 					this.momentevent='attack-right';
 					crabAttackSound.play();
 				}
@@ -260,6 +260,8 @@ class Crab extends Enemy {
 			this.on_s_p_x = 0;
 			this.on_s_p_y_r = 0;
 			this.on_s_p_y = 0;
+			this.isInAtackRange = false;
+			this.doAttack = false;
 		}
 	}	
 }

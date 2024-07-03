@@ -1209,6 +1209,9 @@ class Charachteri extends Being {
 						}else if(CapArray[3] == 1 && CapArray[0] == 1){
 							//leftdownAttack
 							this.momenteventFightStandLeftDown(20);
+						}else if(CapArray[2] == 1 && CapArray[0] == 1){
+							//leftdownAttack
+							this.momenteventFightStandRight(20);
 						}				
 					}else if(CapArray[1] == 1){
 						if(CapArray[0] == 1 && CapArray[1] == 1){
@@ -1217,6 +1220,9 @@ class Charachteri extends Being {
 						}else if(CapArray[2] == 1 && CapArray[1] == 1){
 							//leftdownAttack
 							this.momenteventFightStandRightUp(20);
+						}else if(CapArray[3] == 1 && CapArray[1] == 1){
+							//leftdownAttack
+							this.momenteventFightStandDown(20);
 						}				
 					}else if(CapArray[2] == 1){
 						if(CapArray[1] == 1 && CapArray[2] == 1){
@@ -1225,7 +1231,10 @@ class Charachteri extends Being {
 						}else if(CapArray[3] == 1 && CapArray[2] == 1){
 							//leftdownAttack
 							this.momenteventFightStandRightDown(20);	
-						}				
+						}else if(CapArray[0] == 1 && CapArray[2] == 1){
+							//leftdownAttack
+							this.momenteventFightStandLeft(20);
+						}					
 					}else if(CapArray[3] == 1){
 						if(CapArray[0] == 1 && CapArray[3] == 1){
 							//leftupAttack
@@ -1233,7 +1242,10 @@ class Charachteri extends Being {
 						}else if(CapArray[2] == 1 && CapArray[3] == 1){
 							//leftdownAttack
 							this.momenteventFightStandRightDown(20);
-						}				
+						}else if(CapArray[1] == 1 && CapArray[3] == 1){
+							//leftdownAttack
+							this.momenteventFightStandUp(20);
+						}					
 					}
 					this.fightcounter--;
 				}	
@@ -1305,7 +1317,39 @@ class Charachteri extends Being {
 	}
 
 	playerControlShemaStartScreen(){
+		//console.log('STAARRTSACREEEN CapArray[7]:');
+		//console.log(CapArray[7]);
+		if(CapArray[7] == 1){
+			console.log('777777');
+			if(StartScreenPrevChoose==0){
+				CurrentGLobalState[0] = 'inGame';
+			}else{
+				console.log('EXIT-GAME!!!!');
+			}
+		}
+		
+		if(CapArray[1] == 1){
+			console.log('11111');
+			if(StartScreenPrevChoose==0){
+				
+			}else{
+				StartScreenPrevChoose=0;
+			}
+		}
+		
+		if(CapArray[3] == 1){
+			console.log('333333');
+			if(StartScreenPrevChoose==0){
+				StartScreenPrevChoose=1;
+			}else{
 
+			}
+		}
+		if(StartScreenPrevChoose==0){
+			SV[1].position.y = 39;
+		}else{
+			SV[1].position.y = 49;
+		}
 	}	
 
 	playerControlShemaDeath(){
@@ -1939,7 +1983,7 @@ class Charachteri extends Being {
 
 	////////////////////////////////////////////// Jump /////////////////////////////////////
 	jumpLeft(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -1958,7 +2002,7 @@ class Charachteri extends Being {
 	}
 	
 	jumpRight(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -1971,13 +2015,13 @@ class Charachteri extends Being {
 			this.Shadow.sequenceDrawArrayFiller(this.Shadow.sgdavar);	
 		}else if(this.controlhandlermax==this.controlhandlercounter){
 			this.momentevent = 'walk-right';
-			this.on_s_p_y = this.on_s_p_y-1;
+			this.on_s_p_y = this.on_s_p_y_r;
 			this.Shadow.disapear(this.Shadow.sgdavar);	
 		}
 	}
 	
 	jumpUp(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -1990,21 +2034,27 @@ class Charachteri extends Being {
 			this.Shadow.sequenceDrawArrayFiller(this.Shadow.sgdavar);	
 		}else if(this.controlhandlermax==this.controlhandlercounter){
 			this.momentevent = 'walk-up';
-			this.on_s_p_y = this.on_s_p_y-1;
+			this.on_s_p_y = this.on_s_p_y_r;
 			this.Shadow.disapear(this.Shadow.sgdavar);	
 		}
 	}
 
 	jumpDown(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
 			this.moveDown(0,1);
 			if(this.controlhandlercounter<(width/2)){
 				this.on_s_p_y = this.on_s_p_y-1;
+				console.log('test down  up: '+ this.controlhandlercounter);
+				console.log('this.on_s_p_y  up: '+ this.on_s_p_y);
+				console.log('this.on_s_p_y_r  up: '+ this.on_s_p_y_r);
 			}else{
 				this.on_s_p_y = this.on_s_p_y+1;
+				console.log('test down  down: '+this.controlhandlercounter);
+				console.log('this.on_s_p_y  down: '+ this.on_s_p_y);
+				console.log('this.on_s_p_y_r  down: '+ this.on_s_p_y_r);
 			}
 			this.Shadow.sequenceDrawArrayFiller(this.Shadow.sgdavar);	
 		}else if(this.controlhandlermax==this.controlhandlercounter){
@@ -2015,7 +2065,7 @@ class Charachteri extends Being {
 	}
 	
 	jumpLeftUp(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -2035,7 +2085,7 @@ class Charachteri extends Being {
 	}
 	
 	jumpLeftDown(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -2055,7 +2105,7 @@ class Charachteri extends Being {
 	}
 	
 	jumpRightUp(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -2075,7 +2125,7 @@ class Charachteri extends Being {
 	}
 	
 	jumpRightDown(width){
-		this.Shadow = new Spriteelement(2,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Shadow = new Spriteelement(6,1,"",this.off_s_p_x,781,this.off_s_s_w,this.off_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,this.on_s_s_w,this.on_s_s_h,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Shadow.GVS(this.Shadow.id);
 		this.uebereinstimmtwidth = width;
 		if(this.controlhandlercounter<width){
@@ -2097,9 +2147,9 @@ class Charachteri extends Being {
 
 	////////////////////////////////////////////// Fight Run /////////////////////////////////////
 	fightRunLeft(){
-		this.Weapon = new Spriteelement(5,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2149,9 +2199,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunRight(){
-		this.Weapon = new Spriteelement(5,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
+		this.Weapon = new Spriteelement(7,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2201,9 +2251,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2253,9 +2303,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2304,9 +2354,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunLeftUp(){
-		this.Weapon = new Spriteelement(5,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2339,9 +2389,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunLeftDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2374,9 +2424,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunRightUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2409,9 +2459,9 @@ class Charachteri extends Being {
 	}
 
 	fightRunRightDown(){
-		this.Weapon = new Spriteelement(5,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		if(this.controlhandlercounter==1){
 			attackSound.play();
@@ -2445,10 +2495,10 @@ class Charachteri extends Being {
 
 	////////////////////////////////////////////// Fight Stand /////////////////////////////////////
 	fightStandLeft(){
-		this.Weapon = new Spriteelement(5,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,1,16,16,this.on_s_p_x_r-16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
@@ -2472,10 +2522,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandRight(){
-		this.Weapon = new Spriteelement(5,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
+		this.Weapon = new Spriteelement(7,1,"",18,19,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r+4,16,16,this.on_s_p_x_r+16,this.on_s_p_y_r-4,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
@@ -2499,10 +2549,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,37,16,16,this.on_s_p_x_r,this.on_s_p_y_r-10,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
@@ -2526,10 +2576,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,55,16,16,this.on_s_p_x_r-2,this.on_s_p_y_r+24,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
@@ -2553,10 +2603,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandLeftUp(){
-		this.Weapon = new Spriteelement(5,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);	
+		this.Weapon = new Spriteelement(7,1,"",1,73,16,16,this.on_s_p_x_r-6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);	
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
@@ -2583,10 +2633,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandLeftDown(){
-		this.Weapon = new Spriteelement(5,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",1,109,16,16,this.on_s_p_x_r-9,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
@@ -2613,10 +2663,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandRightUp(){
-		this.Weapon = new Spriteelement(5,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,91,16,16,this.on_s_p_x_r+6,this.on_s_p_y_r-1,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);
 		if(this.controlhandlercounter==1){
@@ -2643,10 +2693,10 @@ class Charachteri extends Being {
 	}
 
 	fightStandRightDown(){
-		this.Weapon = new Spriteelement(5,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
+		this.Weapon = new Spriteelement(7,1,"",18,127,16,16,this.on_s_p_x_r+8,this.on_s_p_y_r+17,16,16,this.on_s_p_x_r,this.on_s_p_y_r,0);
 		this.Weapon.GVS(this.Weapon.id);
 		this.Weapon.sequenceDrawArrayFiller(this.Weapon.sgdavar);
-		this.TempChar = new Spriteelement(7,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
+		this.TempChar = new Spriteelement(5,1,"",this.off_s_p_x, this.off_s_p_y, this.off_s_s_w, this.off_s_s_h, this.on_s_p_x, this.on_s_p_y, this.on_s_s_w, this.on_s_s_h, this.on_s_p_x_r, this.on_s_p_y_r,0);
 		this.TempChar.GVS(this.TempChar.id);
 		this.TempChar.sequenceDrawArrayFiller(this.TempChar.sgdavar);	
 		if(this.controlhandlercounter==1){
@@ -2683,16 +2733,12 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
-				}
-				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] == 4){
-					changeLevelDirection = -1;
-					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2700,8 +2746,12 @@ class Charachteri extends Being {
 					ki = ki * 2;
 				}
 			}
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+7+1] == 4){
+				changeLevelDirection = -1;
+				CurrentGLobalState[0] = 'changeLevel';
+			}
 		}	
-		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
+		//console.log('left: ');
 		if(this.directioncounter==0){
 			this.leftScroll();
 			this.on_s_p_x = this.on_s_p_x-1;
@@ -2744,16 +2794,12 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
-				}
-				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] == 2){
-					changeLevelDirection = 1;
-					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2761,8 +2807,11 @@ class Charachteri extends Being {
 					ki = ki * 2;
 				}
 			}
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+9-2] == 2){
+				changeLevelDirection = 1;
+				CurrentGLobalState[0] = 'changeLevel';
+			}
 		}
-		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
 		if(this.directioncounter==0){
 			this.rightScroll();
 			this.on_s_p_x = this.on_s_p_x+1;
@@ -2806,16 +2855,12 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki* 2;
-				}
-				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] == 5){
-					CurrentGLobalState[0] = 'changeLevel';
-					changeLevelDirection = -4;
 				}
 			}else{
 				if(i<3){
@@ -2823,8 +2868,12 @@ class Charachteri extends Being {
 					ki = ki * 2;
 				}
 			}
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+7][this.on_s_p_x_r+8+i] == 5){
+				CurrentGLobalState[0] = 'changeLevel';
+				changeLevelDirection = -4;
+			}
 		}
-		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
+		//console.log('up: ');
 		if(this.directioncounter==0){
 			this.upScroll();
 			this.on_s_p_y = this.on_s_p_y -1;
@@ -2858,7 +2907,7 @@ class Charachteri extends Being {
 	}		
 	
 	moveDown(stancey,playerornot){
-		console.log('CurrentMapLocation: '+CurrentMapLocation);
+		//console.log('CurrentMapLocation: '+CurrentMapLocation);
 		var k = 2;
 		var ki = 2;
 		for(i=1;i<=this.g_w-2;i++){
@@ -2868,16 +2917,12 @@ class Charachteri extends Being {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
 					this.directioncounter = this.directioncounter + (ki*2);
 					ki = ki * 2;
-				}
-				if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] == 3){
-					changeLevelDirection = 4;
-					CurrentGLobalState[0] = 'changeLevel';
 				}
 			}else{
 				if(i<3){
@@ -2885,8 +2930,12 @@ class Charachteri extends Being {
 					ki = ki * 2;
 				}
 			}
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+9][this.on_s_p_x_r+8+i+1] == 3){
+				changeLevelDirection = 4;
+				CurrentGLobalState[0] = 'changeLevel';
+			}
 		}
-		////console.log('max: '+ this.directioncountermax +' direct: '+ this.directioncounter);
+		//console.log('down: ');
 		if(this.directioncounter==0){
 			this.downScroll();
 			this.on_s_p_y = this.on_s_p_y+1;
@@ -2929,8 +2978,8 @@ class Charachteri extends Being {
 					this.controlhandlercounter = 1;
 					this.controlhandlermax = 50;
 					this.momentevent='being-attacked';
-					this.beingAttackedTriggerCounter = 125;
-					console.log('this.momentevent: ' + this.momentevent);
+					this.beingAttackedTriggerCounter = 75;
+					//console.log('this.momentevent: ' + this.momentevent);
 					this.life= this.life-20;
 					if(this.life==0){
 						CurrentGLobalState[0] = 'pause';
@@ -2959,6 +3008,7 @@ class Charachteri extends Being {
 		if(this.controlhandlercounter == this.controlhandlermax){
 			this.controlhandler = 0;
 			this.controlhandlercounter = 0;
+			this.controlhandlermax = 0;
 		}else{
 			this.anim(8,this.anim_s);
 		}

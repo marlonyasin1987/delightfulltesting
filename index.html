@@ -21,174 +21,17 @@
     <title>Test-2</title>
   </head>
   <style>
-    body{
-      background-color: black;
-    }
     #onscreen{
       image-rendering: pixelated;
     }
-    .main{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .content{
-      width: 100%;
-      max-width: 1100px;
-      background-image: url("backgroundohnelogosmall.png");
-      background-position: center; /* Center the image */
-      background-repeat: no-repeat; /* Do not repeat the image */
-      display: flex;
-      align-items: center;
-      position: relative;
-      flex-direction: column;
-      padding-bottom: 120px;
-    }
-    .content::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    pointer-events: none;
-}
-    .logo{
-      position: absolute;
-      left: 50%;
-      top: 0px;
-      transform: translateX(-50%);
-      width: 512px;
-      height: 256px;
-      background-image: url("delightfulllogo2.png");
-      background-position: center; /* Center the image */
-      background-repeat: no-repeat; /* Do not repeat the image */
-      background-size: cover; /* Resize the background image to cover the entire container */
-      index: 1;
-    }
-    #pixi-container{
-      width: 384px;
-      height: 288px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-top: 256px;
-      index: 2;
-    }
-    #pixi-container canvas {
-        transform: scale(2); /* Scale the canvas by 2x */
-        position: relative;
-    }
-    .controls{
-      padding-bottom: 80px;
-      max-width: 384px;
-      color: rgb(12 153 185);
-      font-family: system-ui;
-    }
-    #joystick-container {
-            position: relative;
-            width: 384px;
-            height: 144px;
-            touch-action: none;
-            margin-bottom: 60px;
-            margin-top: 30px;
-        }
-        #joystick-handle-1 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 60px;
-            left: 60px;
-            touch-action: none;
-        }
-        #joystick-handle-2 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 30px;
-            left: 100px;
-            touch-action: none;
-        }
-        #joystick-handle-3 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 60px;
-            left: 140px;
-            touch-action: none;
-        }
-        #joystick-handle-4 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 90px;
-            left: 100px;
-            touch-action: none;
-        }
-        #joystick-handle-5 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 50px;
-            left: 220px;
-            touch-action: none;
-        }
-        #joystick-handle-6 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 80px;
-            left: 270px;
-            touch-action: none;
-        }
-        #joystick-handle-7 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #ffffff;
-            border-radius: 50%;
-            top: 30px;
-            left: 300px;
-            touch-action: none;
-        }
   </style>  
   <body oncontextmenu="return false;">
-    <div class="main">
-      <div class="content">
-        <div id="pixi-container"></div>
-<!--         <div id="joystick-container">
-          <div id="joystick-handle-1"></div>
-          <div id="joystick-handle-2"></div>
-          <div id="joystick-handle-3"></div>
-          <div id="joystick-handle-4"></div>
-          <div id="joystick-handle-5"></div>
-          <div id="joystick-handle-6"></div>
-          <div id="joystick-handle-7"></div>
-        </div> -->
-        <div class="controls">
-          <h1>Steuerung: </h1>
-          <p><strong>Bewegen:</strong> W, A, S, D</p>
-          <p><strong>Kämpfen:</strong> Pfeiltaste Rechts</p>
-          <p><strong>Springen:</strong> Laufen + Pfeiltaste Unten</p>
-          <p><strong>Pause:</strong> Pfeiltaste Links</p>
-          <p><strong>Fullscreen:</strong> F - Taste</p>
-        </div> 
-        <div class="logo"></div>
-      </div>
-    </div>
+    <h1>Steuerung: </h1>
+    <p>Bewegen: W, A, S, D</p>
+    <p>Kämpfen: Pfeiltaste Rechts</p>
+    <p>Springen: Laufen + Pfeiltaste Unten</p>
+    <p>Pause: Pfeiltaste Links</p>
+    <p>Fullscreen: F - Taste</p>
   </body>
   <script>
     window.onload = function() {
@@ -250,7 +93,7 @@
   //Create a Pixi Application
   let app = new Application({ 
       width: 192, 
-      height: 144,                      
+      height: 144,                       
       antialiasing: true, 
       transparent: false, 
       resolution: 1
@@ -265,12 +108,7 @@
 
 
   //Add the canvas that Pixi automatically created for you to the HTML document
-  // Get the HTML element by its ID
-let pixiContainer = document.getElementById('pixi-container');
-
-// Append PIXI canvas to the container
-pixiContainer.appendChild(app.view);
-  //document.body.appendChild(app.view);
+  document.body.appendChild(app.view);
   app.view.id = "onscreen";
   loader
     .add("sprites/mapi2ss.png")
@@ -645,7 +483,11 @@ pixiContainer.appendChild(app.view);
     containerinventory.addChild(IV[0]);
 
 
-    app.ticker._maxElapsedMS = 16.67;
+
+
+
+
+
     app.ticker.add(delta => gameLoop(delta));
 
     weaponHit = setWeaponHitArray(144, 136, 17, 18);

@@ -58,7 +58,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+8+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -162,7 +162,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8-i][this.on_s_p_x_r+this.on_s_s_w+8-2] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -263,7 +263,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h-this.g_h+8][this.on_s_p_x_r+8+i] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{
@@ -363,7 +363,7 @@ class Being extends Spriteelement {
 				this.directioncountermax = this.directioncountermax + (k*2);
 				k = k * 2;
 			}
-			if(overWorldZ[CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
+			if(overWorldZ[interiorOrOutside][CurrentMapLocation][1]['fullArray'][this.on_s_p_y_r+this.on_s_s_h+8][this.on_s_p_x_r+8+i+1] != 0){
 				if(i<3){
 					this.directioncounter = this.directioncounter + 1 * i;
 				}else{

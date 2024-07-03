@@ -78,16 +78,16 @@ class Spriteelement {
 		GV[id].position.y = this.on_s_p_y;
 		GV[id].tilePosition.x = -(this.off_s_p_x);
 		GV[id].tilePosition.y = -(this.off_s_p_y);
-		GV[id].width = this.on_s_s_w;
+		GV[id].width = this.on_s_s_w ;
 		GV[id].height = this.on_s_s_h;
 	}
 	MVS(id){
-		MV[id].position.x = this.on_s_p_x;
-		MV[id].position.y = this.on_s_p_y;
-		MV[id].tilePosition.x = -this.fadeState*256;
-		MV[id].tilePosition.y = -(this.off_s_p_y);
-		MV[id].width = this.on_s_s_w;
-		MV[id].height = this.on_s_s_h;
+		GV[id].position.x = this.on_s_p_x;
+		GV[id].position.y = this.on_s_p_y;
+		GV[id].tilePosition.x = -this.fadeState*256;
+		GV[id].tilePosition.y = -(this.off_s_p_y);
+		GV[id].width = this.on_s_s_w;
+		GV[id].height = this.on_s_s_h;
 	}
 	
 

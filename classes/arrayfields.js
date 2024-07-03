@@ -713,9 +713,9 @@ var FgroundMapArrayFiller = function(){
 		}
 
 FgroundMapArrayFiller();
-console.log('FgroundMapArrayFiller()');
-console.log(FgroundMapArray.length);
-console.log(FgroundMapArray[0].length);
+//console.log('FgroundMapArrayFiller()');
+//console.log(FgroundMapArray.length);
+//console.log(FgroundMapArray[0].length);
 
 function extractImageData(collisionimage) {
   const canvas = document.createElement('canvas');
@@ -823,8 +823,8 @@ function setWeaponHitArray(width, height, sliceWidth, sliceHeight) {
 
     // Set the src attribute to start loading the image
     img.src = 'sprites/weapons.png';
-    console.log('weapon');
-    console.log(fullArray);
+    //console.log('weapon');
+    //console.log(fullArray);
     return {
       fullArray
     };
@@ -836,8 +836,8 @@ function setMapArray(sliceWidth, sliceHeight,i) {
   // Create an Image object
    const img = new Image();
    let fullArray = new Array(328);
-   for(let i = 0; i < fullArray.length;i++){
-    fullArray[i]=new Array(272);
+   for(let p = 0; p < fullArray.length;p++){
+    fullArray[p]=new Array(272);
    }
    // Set up a callback for when the image is loaded
    img.onload = function() {
@@ -879,26 +879,94 @@ function setMapArray(sliceWidth, sliceHeight,i) {
         }else if(r==255 && g==242 && b==0){
           fullArray[k][l] = 5;
           //gelb
-        }else{
+        }else if(r==0 && g==0 && b==0){
           fullArray[k][l] = 1;
           //console.log('r= '+imageData[index]+'  '+'g= '+imageData[index+1]+'  '+'b= '+imageData[index+2]+'  '+'t= '+imageData[index+3]);
           //console.log('isNOTTrans!!!:  '+ parseInt(((j-1)*sliceWidth)+(1+l))+' | '+ parseInt(((i-1)*sliceHeight)+(1+k)));
+        }else{
+          fullArray[k][l] = 6;
         }
       }
     }
    };
 
    // Set the src attribute to start loading the image
-   img.src = 'sprites/collison'+i+'.png?=7';
-   console.log('maps');
-   console.log(fullArray);
+   img.src = 'sprites/collison'+i+'.png?='+ + new Date().getTime();
+   //console.log('maps');
+   //console.log(fullArray);
    return {
      fullArray
    };
 
 }
 
+function setInteriorArray(sliceWidth, sliceHeighti,i) {
 
+  // Create an Image object
+   const img = new Image();
+   let fullArray = new Array(328);
+   for(let p = 0; p < fullArray.length;p++){
+    fullArray[p]=new Array(272);
+   }
+   // Set up a callback for when the image is loaded
+   img.onload = function() {
+     // Create a canvas to draw the image onto
+     const canvas2 = document.createElement('canvas');
+     canvas2.width = img.width;
+     canvas2.height = img.height;
+     const ctx = canvas2.getContext('2d');
+
+     // Draw the image onto the canvas
+     ctx.drawImage(img, 0, 0);
+
+     // Extract the pixel data
+     const imageData = ctx.getImageData(0, 0, canvas2.width, canvas2.height).data;
+     //console.log(imageData);
+    for(let k = 0; k < sliceHeight;k++){
+      for(let l = 0; l < sliceWidth;l++){
+        const x = l;
+        const y = k;
+        const index = (y * canvas2.width + x) * 4;
+        const r = imageData[index];
+        const g = imageData[index + 1];
+        const b = imageData[index + 2];
+        const a = imageData[index + 3];
+        //console.log(`Pixel at (${x}, ${y}) - RGBA: (${r}, ${g}, ${b}, ${a})`);
+        if(r==255 && g==255 && b==255){
+          fullArray[k][l] = 0;
+        }else if(r==0 && g==0 && b==0){
+          fullArray[k][l] = 1;
+        }else if(r==237 && g==28 && b==36){
+          fullArray[k][l] = 2;
+          //rot
+        }else if(r==0 && g==162 && b==232){
+          fullArray[k][l] = 3;
+          //blau
+        }else if(r==34 && g==177 && b==76){
+          fullArray[k][l] = 4;
+          //grün
+        }else if(r==255 && g==242 && b==0){
+          fullArray[k][l] = 5;
+          //gelb
+        }else if(r==0 && g==0 && b==0){
+          fullArray[k][l] = 1;
+          //console.log('r= '+imageData[index]+'  '+'g= '+imageData[index+1]+'  '+'b= '+imageData[index+2]+'  '+'t= '+imageData[index+3]);
+          //console.log('isNOTTrans!!!:  '+ parseInt(((j-1)*sliceWidth)+(1+l))+' | '+ parseInt(((i-1)*sliceHeight)+(1+k)));
+        }else{
+          fullArray[k][l] = 6;
+        }
+      }
+    }
+   };
+
+   // Set the src attribute to start loading the image
+   img.src = 'sprites/collisonInt'+i+'.png?='+ + new Date().getTime();
+
+   return {
+     fullArray
+   };
+
+}
 
 function setHitArray(width, height, sliceWidth, sliceHeight) {
 
@@ -949,8 +1017,8 @@ function setHitArray(width, height, sliceWidth, sliceHeight) {
 
    // Set the src attribute to start loading the image
    img.src = 'sprites/testcrabs.png';
-   console.log('cranks');
-   console.log(fullArray);
+   //console.log('cranks');
+   //console.log(fullArray);
    return {
      fullArray
    };

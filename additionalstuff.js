@@ -48,6 +48,94 @@
 /////////////////////////////////////                                          GAMEPAD                                                                                          //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+document.addEventListener('DOMContentLoaded', () => {
+	// Joystick-Logik
+	const joystickContainer = document.getElementById('joystick-container');
+	const joystickHandle1 = document.getElementById('joystick-handle-1');
+	const joystickHandle2 = document.getElementById('joystick-handle-2');
+	const joystickHandle3 = document.getElementById('joystick-handle-3');
+	const joystickHandle4 = document.getElementById('joystick-handle-4');
+	const joystickHandle5 = document.getElementById('joystick-handle-5');
+	const joystickHandle6 = document.getElementById('joystick-handle-6');
+	const joystickHandle7 = document.getElementById('joystick-handle-7');
+
+	let dragging1 = false;
+	let dragging2 = false;
+	let dragging3 = false;
+	let dragging4 = false;
+	let dragging5 = false;
+	let dragging6 = false;
+	let dragging7 = false;
+
+
+	joystickHandle1.addEventListener('pointerdown', (event) => {
+		CapArray[0] = 1;
+	});
+	joystickHandle2.addEventListener('pointerdown', (event) => {
+		CapArray[1] = 1;
+	});
+	joystickHandle3.addEventListener('pointerdown', (event) => {
+		CapArray[2] = 1;
+	});
+	joystickHandle4.addEventListener('pointerdown', (event) => {
+		CapArray[3] = 1;
+	});
+	joystickHandle5.addEventListener('pointerdown', (event) => {
+		CapArray[4] = 1;
+	});
+	joystickHandle6.addEventListener('pointerdown', (event) => {
+		CapArray[7] = 1;
+	});
+	joystickHandle7.addEventListener('pointerdown', (event) => {
+		CapArray[6] = 1;
+	});
+
+	joystickHandle1.addEventListener('pointerup', (event) => {
+		CapArray[0] = 0;
+	});
+	joystickHandle2.addEventListener('pointerup', (event) => {
+		CapArray[1] = 0;
+	});
+	joystickHandle3.addEventListener('pointerup', (event) => {
+		CapArray[2] = 0;
+	});
+	joystickHandle4.addEventListener('pointerup', (event) => {
+		CapArray[3] = 0;
+	});
+	joystickHandle5.addEventListener('pointerup', (event) => {
+		CapArray[4] = 0;
+	});
+	joystickHandle6.addEventListener('pointerup', (event) => {
+		CapArray[7] = 0;
+	});
+	joystickHandle7.addEventListener('pointerup', (event) => {
+		CapArray[6] = 0;
+	});
+
+
+    document.addEventListener('pointercancel', (event) => {
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[7] = 0;
+        CapArray[6] = 0;
+    });
+
+	document.addEventListener('pointermove', (event) => {
+		CapArray[0] = 0;
+		CapArray[1] = 0;
+		CapArray[2] = 0;
+		CapArray[3] = 0;
+		CapArray[4] = 0;
+		CapArray[7] = 0;
+        CapArray[6] = 0;
+    });
+});
+
+
+
 var haveEvents = 'ongamepadconnected' in window;
 var controllers = {};
 
