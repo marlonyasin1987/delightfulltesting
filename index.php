@@ -180,9 +180,9 @@
         </div> -->
         <div class="controls">
           <h1>Steuerung: </h1>
-          <p><strong>Bewegen:</strong> W, A, S, D</p>
-          <p><strong>Kämpfen:</strong> Pfeiltaste Rechts</p>
-          <p><strong>Springen:</strong> Laufen + Pfeiltaste Unten</p>
+          <p><strong>Bestätigen / Springen:</strong>Pfeiltaste Unten  und mit W,A,S,D richtung vorgeben</p>
+          <p><strong>Kämpfen:</strong> Pfeiltaste Rechts und mit W,A,S,D richtung vorgeben</p>
+          <p><strong>Laufen:</strong> W, A, S, D</p>
           <p><strong>Pause:</strong> Pfeiltaste Links</p>
           <p><strong>Fullscreen:</strong> F - Taste</p>
         </div> 
@@ -886,6 +886,7 @@ pixiContainer.appendChild(app.view);
           //Player.momentevent = 'just-stand';
         }
         //console.log('changeLevelCounter: '+changeLevelCounter);
+        
       }
       
     }else if(CurrentGLobalState[0] == 'startScreen'){
